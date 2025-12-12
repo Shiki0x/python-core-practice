@@ -1,5 +1,8 @@
 print("=== Party Manager ===")
 
+# List holds many records.
+# Dictionary holds one record.
+# Keys such as "name", "class", "level" label the data.
 party = []
 
 while True:
