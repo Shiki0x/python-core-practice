@@ -1,6 +1,25 @@
+"""
+Party Manager CLI
+Phase 1 Capstone Project
+
+Features:
+- Add, view, remove party members
+- JSON persistence
+- Input validation
+- Explicit state management
+
+Author: Shiki0x
+"""
+
 import json
 
 FILENAME = "party.json"
+MENU_OPTIONS = {
+    "1": "Add member",
+    "2": "View party",
+    "3": "Remove member",
+    "4": "Save & Exit"
+}
 
 def load_party():
     try:
@@ -14,8 +33,8 @@ def save_party(party):
         json.dump(party, file, indent=4)
 
 def add_member(party):
-    name = input("Name: ")
-    role = input("Class: ")
+    name = input("Enter name: ").strip()
+    role = input("Enter class: ").strip()
     while True:
         try:
             level = int(input("Level: "))
@@ -51,15 +70,16 @@ def view_party(party):
     for i, member in enumerate(party, start=1):
         print(f"{i}. {member['name']} - {member['class']} (Lvl {member['level']})")
 
+def print_menu():
+    print("\n--- Party Manager ---")
+    for key, label in MENU_OPTIONS.items():
+        print(f"{key}. {label}")
+
 def main():
     party = load_party()
 
     while True:
-        print("\n1. Add member")
-        print("2. View party")
-        print("3. Remove member")
-        print("4. Save & Exit")
-
+        print_menu()
         choice = input("Choose: ")
 
         if choice == "1":
@@ -73,6 +93,6 @@ def main():
             print("Party saved!")
             break
         else:
-            print("Enter a number between 1 and 4.")
+            print("Invalid choice. Please select 1-4.")
 
 main()
