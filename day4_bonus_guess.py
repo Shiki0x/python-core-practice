@@ -32,7 +32,7 @@ while True:
     if attempts == 0:
         print(f"\n😢 Out of attempts! The number was {secret_number}. Better luck next time!")
 
-        play_again = input("Play again? (y/n): ").lower()
-        if play_again != "y":
-            print("Thanks for playing!")
-            break
+    play_again = input("Play again? (y/n): ").lower()
+    if play_again != "y":
+        print("Thanks for playing!")
+        break
