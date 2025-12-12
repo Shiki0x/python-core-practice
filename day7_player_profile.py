@@ -18,11 +18,12 @@ while True:
         player["hp"] = int(input("Enter HP: "))
         print("Profile created!")
 
-    elif choice  == "2":
+    elif choice == "2":
         if not player:
             print("No profile found.")
         else:
             print("\nPlayer Profile:")
+            # Using this instead of enumerate because the items already have a key from the dictionary.
             for key, value in player.items():
                 print(f"{key}: {value}")
 
