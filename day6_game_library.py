@@ -21,9 +21,9 @@ while True:
             print("Your library is empty.")
         else:
             print("\nYour Games: ")
-            for i, game in enumerate(games, start=1):
-                print(f"{i}. {game}")
-
+            for i, game in enumerate(games, start=1): # Does not sort data it temporarily
+                print(f"{i}. {game}")                 # pairs each list item with a counter
+                                                      # as teh loop runs.
     elif choice == "3":
         game = input("Enter game name to remove: ")
         if game in games:
