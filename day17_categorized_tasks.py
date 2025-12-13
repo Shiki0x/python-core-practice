@@ -8,13 +8,32 @@ def load_data():
             return json.load(file)
     except (FileNotFoundError, json.JSONDecodeError):
         return {}
+    
+    if not isinstance(data, dict):
+        return {}
+    
+    cleaned = {}
+
+    for category, tasks in data.items():
+        if not isinstance(category, str):
+            continue
+
+        if not isinstance(tasks, list):
+            cleaned[category] = []
+            continue
+        
+        cleaned[category] = [
+            task for task in tasks if is_valid_task(task)
+        ]
+
+        return cleaned
 
 def save_data(data):
     with open(FILENAME, "w") as file:
         json.dump(data, file, indent=4)
 
 def add_category(data):
-    category = input("Create a category: ")
+    category = input("Create a category: ").strip()
 
     if not category:
         print("Category name cannot be empty.")
@@ -22,6 +41,7 @@ def add_category(data):
     
     if category in data:
         print("Category already exists.")
+        return
 
     data[category] = []
     print(f"Category '{category}' created.")
@@ -59,11 +79,12 @@ def add_task(data):
         print("Task cannot be empty.")
         return
     
-    data[category].append({
-        "title": title,
-        "done": False
-    })
+    new_task = {"title": title, "done": False}
 
+    if not is_valid_task(new_task):
+        print("Invalid task data.")
+
+    data[category].append(new_task)
     print(f"Task added to '{category}'.")
 
 def list_tasks(data):
@@ -112,7 +133,6 @@ def delete_task(data):
         return
     
     tasks = data[category]
-    list_tasks(data)
 
     if not tasks:
         print("No tasks to delete in this category.")
@@ -131,6 +151,21 @@ def delete_task(data):
     
     removed_task = tasks.pop(index)
     print(f"Removed task: {removed_task['title']}")
+
+def is_valid_task(task):
+    if not isinstance(task, dict):
+        return False
+    
+    if "title" not in task or "done" not in task:
+        return False
+    
+    if not isinstance(task["title"], str) or not task["title"].strip():
+        return False
+    
+    if not isinstance(task["done", bool]):
+        return False
+    
+    return True
 
 def main():
     data = load_data()
